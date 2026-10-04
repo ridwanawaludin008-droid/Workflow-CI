@@ -20,7 +20,11 @@ with mlflow.start_run():
     acc = accuracy_score(y_test, pred)
 
     mlflow.log_metric("accuracy", acc)
-    mlflow.sklearn.log_model(model, "model")
+    mlflow.sklearn.log_model(
+        model,
+        "model",
+        skops_trusted_types=["sklearn.tree._tree.Tree"],
+    )
     joblib.dump(model, "model.pkl")
 
     print("Accuracy:", acc)
